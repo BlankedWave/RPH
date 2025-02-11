@@ -6,40 +6,71 @@
     <title>Borang RPH</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-6">
-    <div class="max-w-4xl mx-auto bg-white p-6 shadow-md rounded-lg">
+<body class="bg-gray-100 p-5">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-2xl font-semibold text-center mb-4">Borang Rancangan Pengajaran Harian (RPH)</h2>
         
-        <form id="rphForm" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium">Tarikh:</label>
-                <input type="date" id="tarikh" class="w-full p-2 border rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-medium">Mata Pelajaran:</label>
-                <input type="text" id="mataPelajaran" class="w-full p-2 border rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-medium">Tingkatan:</label>
-                <input type="text" id="tingkatan" class="w-full p-2 border rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-medium">Objektif Pembelajaran:</label>
-                <textarea id="objektif" class="w-full p-2 border rounded"></textarea>
-            </div>
-            <div>
-                <label class="block text-sm font-medium">Aktiviti Pengajaran:</label>
-                <textarea id="aktiviti" class="w-full p-2 border rounded"></textarea>
-            </div>
-            <div>
-                <label class="block text-sm font-medium">Penilaian:</label>
-                <textarea id="penilaian" class="w-full p-2 border rounded"></textarea>
+        <form id="rphForm">
+            <div class="mb-4">
+                <label class="block font-medium">Nama Mata Pelajaran:</label>
+                <input type="text" id="subject" class="w-full p-2 border rounded">
             </div>
             
-            <div class="flex justify-between mt-4">
-                <button type="button" onclick="simpanData()" class="px-4 py-2 bg-blue-500 text-white rounded">Simpan</button>
-                <button type="button" onclick="cetakRPH()" class="px-4 py-2 bg-green-500 text-white rounded">Cetak</button>
-                <button type="button" onclick="resetForm()" class="px-4 py-2 bg-red-500 text-white rounded">Reset</button>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-medium">Tingkatan:</label>
+                    <input type="text" id="tingkatan" class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block font-medium">Tarikh Pengajaran:</label>
+                    <input type="date" id="tarikh" class="w-full p-2 border rounded">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium">Tempoh Masa:</label>
+                <input type="text" id="tempoh" class="w-full p-2 border rounded" placeholder="Contoh: 60 minit">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block font-medium">Objektif Pengajaran:</label>
+                <textarea id="objektif" class="w-full p-2 border rounded"></textarea>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block font-medium">Nilai dan Etika:</label>
+                <textarea id="nilai" class="w-full p-2 border rounded"></textarea>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block font-medium">Kaedah dan Strategi Pengajaran:</label>
+                <textarea id="kaedah" class="w-full p-2 border rounded"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium">Langkah-Langkah Pengajaran:</label>
+                <textarea id="langkah" class="w-full p-2 border rounded"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium">Bahan dan Alat Bantu Mengajar:</label>
+                <textarea id="bahan" class="w-full p-2 border rounded"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium">Penilaian:</label>
+                <textarea id="penilaian" class="w-full p-2 border rounded"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium">Refleksi:</label>
+                <textarea id="refleksi" class="w-full p-2 border rounded"></textarea>
+            </div>
+            
+            <div class="flex space-x-2">
+                <button type="button" onclick="simpanData()" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
+                <button type="button" onclick="cetak()" class="bg-green-500 text-white px-4 py-2 rounded">Cetak</button>
+                <button type="button" onclick="resetForm()" class="bg-red-500 text-white px-4 py-2 rounded">Reset</button>
             </div>
         </form>
     </div>
@@ -47,30 +78,40 @@
     <script>
         function simpanData() {
             const data = {
-                tarikh: document.getElementById('tarikh').value,
-                mataPelajaran: document.getElementById('mataPelajaran').value,
+                subject: document.getElementById('subject').value,
                 tingkatan: document.getElementById('tingkatan').value,
+                tarikh: document.getElementById('tarikh').value,
+                tempoh: document.getElementById('tempoh').value,
                 objektif: document.getElementById('objektif').value,
-                aktiviti: document.getElementById('aktiviti').value,
+                nilai: document.getElementById('nilai').value,
+                kaedah: document.getElementById('kaedah').value,
+                langkah: document.getElementById('langkah').value,
+                bahan: document.getElementById('bahan').value,
                 penilaian: document.getElementById('penilaian').value,
+                refleksi: document.getElementById('refleksi').value
             };
             localStorage.setItem('rphData', JSON.stringify(data));
-            alert('Data RPH disimpan!');
+            alert('Data disimpan!');
         }
 
-        function loadData() {
+        function muatkanData() {
             const data = JSON.parse(localStorage.getItem('rphData'));
             if (data) {
-                document.getElementById('tarikh').value = data.tarikh;
-                document.getElementById('mataPelajaran').value = data.mataPelajaran;
+                document.getElementById('subject').value = data.subject;
                 document.getElementById('tingkatan').value = data.tingkatan;
+                document.getElementById('tarikh').value = data.tarikh;
+                document.getElementById('tempoh').value = data.tempoh;
                 document.getElementById('objektif').value = data.objektif;
-                document.getElementById('aktiviti').value = data.aktiviti;
+                document.getElementById('nilai').value = data.nilai;
+                document.getElementById('kaedah').value = data.kaedah;
+                document.getElementById('langkah').value = data.langkah;
+                document.getElementById('bahan').value = data.bahan;
                 document.getElementById('penilaian').value = data.penilaian;
+                document.getElementById('refleksi').value = data.refleksi;
             }
         }
 
-        function cetakRPH() {
+        function cetak() {
             window.print();
         }
 
@@ -79,7 +120,7 @@
             localStorage.removeItem('rphData');
         }
 
-        window.onload = loadData;
+        window.onload = muatkanData;
     </script>
 </body>
 </html>
