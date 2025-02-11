@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borang RPH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-6 shadow-md rounded-lg">
+        <h2 class="text-2xl font-semibold text-center mb-4">Borang Rancangan Pengajaran Harian (RPH)</h2>
+        
+        <form id="rphForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium">Tarikh:</label>
+                <input type="date" id="tarikh" class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Mata Pelajaran:</label>
+                <input type="text" id="mataPelajaran" class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Tingkatan:</label>
+                <input type="text" id="tingkatan" class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Objektif Pembelajaran:</label>
+                <textarea id="objektif" class="w-full p-2 border rounded"></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Aktiviti Pengajaran:</label>
+                <textarea id="aktiviti" class="w-full p-2 border rounded"></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Penilaian:</label>
+                <textarea id="penilaian" class="w-full p-2 border rounded"></textarea>
+            </div>
+            
+            <div class="flex justify-between mt-4">
+                <button type="button" onclick="simpanData()" class="px-4 py-2 bg-blue-500 text-white rounded">Simpan</button>
+                <button type="button" onclick="cetakRPH()" class="px-4 py-2 bg-green-500 text-white rounded">Cetak</button>
+                <button type="button" onclick="resetForm()" class="px-4 py-2 bg-red-500 text-white rounded">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function simpanData() {
+            const data = {
+                tarikh: document.getElementById('tarikh').value,
+                mataPelajaran: document.getElementById('mataPelajaran').value,
+                tingkatan: document.getElementById('tingkatan').value,
+                objektif: document.getElementById('objektif').value,
+                aktiviti: document.getElementById('aktiviti').value,
+                penilaian: document.getElementById('penilaian').value,
+            };
+            localStorage.setItem('rphData', JSON.stringify(data));
+            alert('Data RPH disimpan!');
+        }
+
+        function loadData() {
+            const data = JSON.parse(localStorage.getItem('rphData'));
+            if (data) {
+                document.getElementById('tarikh').value = data.tarikh;
+                document.getElementById('mataPelajaran').value = data.mataPelajaran;
+                document.getElementById('tingkatan').value = data.tingkatan;
+                document.getElementById('objektif').value = data.objektif;
+                document.getElementById('aktiviti').value = data.aktiviti;
+                document.getElementById('penilaian').value = data.penilaian;
+            }
+        }
+
+        function cetakRPH() {
+            window.print();
+        }
+
+        function resetForm() {
+            document.getElementById('rphForm').reset();
+            localStorage.removeItem('rphData');
+        }
+
+        window.onload = loadData;
+    </script>
+</body>
+</html>
